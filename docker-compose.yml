@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: dmt_ingresos_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-dmt_ingresos}
+      POSTGRES_USER: ${POSTGRES_USER:-dmt_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dmt_password}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-dmt_user} -d ${POSTGRES_DB:-dmt_ingresos}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./DMT_Gestion_Ingresos_Back
+    container_name: dmt_ingresos_back
+    restart: unless-stopped
+    env_file:
+      - ./DMT_Gestion_Ingresos_Back/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-dmt_user}:${POSTGRES_PASSWORD:-dmt_password}@db:5432/${POSTGRES_DB:-dmt_ingresos}
+      REGISTROS_BASE_PATH: /app/data/registros
+      OCR_RESULTADOS_DIR: /app/data/ocr_resultados
+      CATALOGOS_PATH: /app/data/catalogos.json
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./DMT_Gestion_Ingresos_Back/data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./DMT_Gestion_Ingresos_Front
+      args:
+        VITE_API_URL: http://localhost:8000
+    container_name: dmt_ingresos_front
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

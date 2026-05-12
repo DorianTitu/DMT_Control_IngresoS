@@ -1,0 +1,62 @@
+{
+  "departamentos": [
+    {
+      "id": "dpto-1a",
+      "nombre": "Parroquia",
+      "activo": true,
+      "cupo_vehicular": 10,
+      "parqueo_reset_at": "2026-05-12T22:09:20"
+    },
+    {
+      "id": "dpto-1b",
+      "nombre": "Dpto. 1B",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "dpto-2a",
+      "nombre": "Dpto. 2A",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "dpto-colegio-207d51",
+      "nombre": "Colegio",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    }
+  ],
+  "motivos": [
+    {
+      "id": "visita",
+      "nombre": "MIsa",
+      "tipo": "vehicular",
+      "activo": true,
+      "departamento_id": "dpto-1a"
+    },
+    {
+      "id": "trabajador",
+      "nombre": "Trabajador",
+      "tipo": "peatonal",
+      "activo": true,
+      "departamento_id": "dpto-1a"
+    },
+    {
+      "id": "entrega",
+      "nombre": "Entrega",
+      "tipo": "ambos",
+      "activo": true,
+      "departamento_id": "dpto-1a"
+    },
+    {
+      "id": "residente",
+      "nombre": "Residente",
+      "tipo": "vehicular",
+      "activo": true,
+      "departamento_id": "dpto-1a"
+    }
+  ]
+}

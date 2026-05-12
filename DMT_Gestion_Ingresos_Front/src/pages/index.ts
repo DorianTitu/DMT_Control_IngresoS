@@ -1,0 +1,7 @@
+export { Dashboard } from './Dashboard'
+export { SelectModule } from './SelectModule'
+export { FormPeatonal } from './FormPeatonal'
+export { FormVehicular } from './FormVehicular'
+export { CatalogosConfig } from './CatalogosConfig'
+export { IngresoDetalleModal } from './IngresoDetalleModal'
+export { ExportarIngresosModal } from './ExportarIngresosModal'

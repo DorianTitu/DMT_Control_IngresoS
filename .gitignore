@@ -1,0 +1,47 @@
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Python (Backend)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+
+# Node.js (Frontend)
+node_modules/
+dist/
+build/
+.next/
+.nuxt/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# OS specific
+*.sublime-workspace
+*.sublime-project
+
+# IDE
+.editorconfig
