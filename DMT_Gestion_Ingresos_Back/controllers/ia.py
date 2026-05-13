@@ -21,6 +21,12 @@ router = APIRouter(prefix="/ia", tags=["IA - Google Gemini"])
 _gemini = GeminiCedulaService()
 
 
+def _ultimos_10_digitos(texto: str) -> str:
+    import re
+
+    return re.sub(r"\D", "", texto or "")[-10:]
+
+
 class ImagenCedulaRequest(BaseModel):
     imagen_base64: str
     tipo_cedula: Literal["nueva", "antigua"] = "nueva"
@@ -42,28 +48,7 @@ def _parsear_cedula_ocr(texto: str) -> dict:
     
     texto_upper = texto.upper()
     
-    # Extraer cédula
-    cedula = ""
-    
-    # Busca números después de "DOCUMENTO" (puede ser 9 o 10 dígitos)
-    match_cedula = re.search(r'DOCUMENTO\s+(\d+)', texto_upper)
-    if match_cedula:
-        cedula_candidate = match_cedula.group(1).strip()
-        # Preferir números de 10 dígitos (cédula) sobre 9 dígitos (serie)
-        if len(cedula_candidate) == 10:
-            cedula = cedula_candidate
-        elif len(cedula_candidate) == 9:
-            # Buscar también un número de 10 dígitos en cualquier lugar
-            match_10 = re.search(r'\b(\d{10})\b', texto_upper)
-            if match_10:
-                cedula = match_10.group(1).strip()
-            else:
-                cedula = cedula_candidate  # Usar los 9 dígitos si no hay 10
-    else:
-        # Fallback: buscar cualquier número de 10 dígitos
-        match_cedula = re.search(r'\b(\d{10})\b', texto_upper)
-        if match_cedula:
-            cedula = match_cedula.group(1).strip()
+    cedula = _ultimos_10_digitos(texto_upper)
     
     # Extraer apellidos - buscar después de "APELLIDOS" hasta "NOMBRES"
     apellidos = ""
@@ -115,12 +100,16 @@ async def procesar_cedula_con_ia(datos: ImagenCedulaRequest):
         res_nombres = await run_in_threadpool(ocr.procesar_nombres_apellidos, imagen_bytes)
 
         texto_numero = res_numero.get("ocr", {}).get("texto_completo", "")
+        cedula_ocr = res_numero.get("numero_cedula_parseado", {}).get("numero", "")
         parsed_nombres = res_nombres.get("nombres_apellidos_parseados", {})
         texto_nombres = parsed_nombres.get("nombres", "")
         texto_apellidos = parsed_nombres.get("apellidos", "")
 
         logger.info("[IA] Enviando a Gemini...")
         resultado_ia = await run_in_threadpool(_gemini.limpiar_datos_cedula, texto_numero, texto_nombres, texto_apellidos)
+        if len(cedula_ocr) == 10:
+            resultado_ia["cedula"] = cedula_ocr
+            resultado_ia["cedula_origen"] = "ocr_numero"
 
         return {
             "tipo_cedula": datos.tipo_cedula,
@@ -128,6 +117,7 @@ async def procesar_cedula_con_ia(datos: ImagenCedulaRequest):
             "resultado_ia": resultado_ia,
             "ocr_crudo": {
                 "numero": texto_numero,
+                "numero_parseado": cedula_ocr,
                 "nombres": texto_nombres,
                 "apellidos": texto_apellidos,
             },

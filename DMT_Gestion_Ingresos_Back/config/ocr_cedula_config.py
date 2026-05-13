@@ -12,27 +12,30 @@ from config.settings import OCR_RESULTADOS_DIR
 # ZONAS DE RECORTE POR CÁMARA Y TIPO DE CÉDULA
 # Dimensiones: 1200x720 píxeles
 # =============================================
+ZONA_NUMERO_NUEVA = (65, 515, 445, 610)
+ZONA_NOMBRES_NUEVA = (315, 110, 650, 315)
+ZONA_NUMERO_ANTIGUA = (640, 125, 930, 220)
+ZONA_NOMBRES_ANTIGUA = (340, 210, 650, 305)
+
 OCR_ZONAS = {
     "peatonal": {
         "nueva": {
-            "zona_numero": (50, 480, 1150, 700),                 # Número (parte inferior)
-            "zona_nombres_apellidos": (50, 20, 1150, 280)        # Nombres y apellidos (parte superior)
+            "zona_numero": ZONA_NUMERO_NUEVA,                    # Número NUI
+            "zona_nombres_apellidos": ZONA_NOMBRES_NUEVA         # Bloque APELLIDOS/NOMBRES
         },
         "antigua": {
-            "zona_numero": (50, 480, 1150, 700),                 # Número (parte inferior)
-            "zona_nombres_apellidos": (50, 20, 1150, 280)        # Nombres y apellidos (parte superior)
+            "zona_numero": ZONA_NUMERO_ANTIGUA,                  # Número No. 000000000-0
+            "zona_nombres_apellidos": ZONA_NOMBRES_ANTIGUA       # Bloque APELLIDOS Y NOMBRES
         }
     },
     "vehicular": {
         "nueva": {
-            # TODO: Ajustar estas zonas para cámara vehicular
-            "zona_numero": (50, 480, 1150, 700),                 # Número (parte inferior)
-            "zona_nombres_apellidos": (50, 20, 1150, 280)        # Nombres y apellidos (parte superior)
+            "zona_numero": ZONA_NUMERO_NUEVA,
+            "zona_nombres_apellidos": ZONA_NOMBRES_NUEVA
         },
         "antigua": {
-            # TODO: Ajustar estas zonas para cámara vehicular
-            "zona_numero": (50, 480, 1150, 700),                 # Número (parte inferior)
-            "zona_nombres_apellidos": (50, 20, 1150, 280)        # Nombres y apellidos (parte superior)
+            "zona_numero": ZONA_NUMERO_ANTIGUA,
+            "zona_nombres_apellidos": ZONA_NOMBRES_ANTIGUA
         }
     }
 }

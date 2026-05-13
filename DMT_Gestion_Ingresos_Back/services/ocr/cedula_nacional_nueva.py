@@ -7,6 +7,10 @@ VARIACIONES_NOMBRES = {
 }
 
 
+def _ultimos_10_digitos(texto: str) -> str:
+    return re.sub(r"\D", "", texto or "")[-10:]
+
+
 class CedulaNacionalNuevaOCR(BaseCedulaNacionalOCR):
     """OCR para cédulas nuevas de Ecuador."""
 
@@ -23,7 +27,7 @@ class CedulaNacionalNuevaOCR(BaseCedulaNacionalOCR):
         texto = texto_ocr.strip().upper()
         # Remover prefijos NUI
         texto = re.sub(r"^NUI\.?\s*", "", texto)
-        numero = re.sub(r"\D", "", texto)[:10]
+        numero = _ultimos_10_digitos(texto)
         return {"numero": numero, "confianza": confianza}
 
     def _parsear_nombres_apellidos(self, componentes: list) -> dict:

@@ -35,6 +35,10 @@ def _cache_key(*textos: str) -> str:
     return hashlib.sha256(contenido.encode()).hexdigest()
 
 
+def _ultimos_10_digitos(texto: str) -> str:
+    return re.sub(r"\D", "", texto or "")[-10:]
+
+
 class GeminiCedulaService:
     """Limpia y estructura el texto OCR de una cédula usando Gemini."""
 
@@ -207,7 +211,7 @@ class GeminiCedulaService:
             }
 
         return {
-            "cedula":    re.sub(r"\D", "", str(datos.get("cedula", "")))[:10],
+            "cedula":    _ultimos_10_digitos(str(datos.get("cedula", ""))),
             "nombres":   str(datos.get("nombres", "")).strip().upper(),
             "apellidos": str(datos.get("apellidos", "")).strip().upper(),
         }

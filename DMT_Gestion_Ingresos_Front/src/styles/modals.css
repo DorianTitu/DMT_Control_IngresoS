@@ -129,6 +129,7 @@
 }
 
 .photo-box {
+  position: relative;
   border: 1px dashed var(--border-2);
   border-radius: 6px;
   background: var(--surface-2);
@@ -139,6 +140,7 @@
   gap: 6px;
   cursor: pointer;
   transition: all 0.2s;
+  overflow: hidden;
 }
 
 .photo-box:hover {
@@ -156,6 +158,39 @@
 
 .photo-box.med {
   height: 180px;
+}
+
+.photo-box > img,
+.photo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-box:has(img) .photo-label {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  background: rgba(17, 24, 39, 0.72);
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 8px;
+}
+
+.ocr-zone-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  background: rgba(214, 6, 18, 0.9);
+  color: #fff;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 .photo-label {
@@ -542,6 +577,82 @@
   max-height: calc(100vh - 120px);
   object-fit: contain;
   background: #111;
+}
+
+.ocr-debug-modal {
+  max-width: 1200px;
+}
+
+.ocr-debug-body {
+  background: var(--bg);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) 360px;
+  gap: 18px;
+  max-height: calc(100vh - 150px);
+  overflow: auto;
+}
+
+.ocr-debug-main,
+.ocr-crop-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ocr-debug-main img,
+.ocr-crop-card img {
+  display: block;
+  width: 100%;
+  object-fit: contain;
+  background: #111;
+}
+
+.ocr-debug-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ocr-debug-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ocr-debug-meta span {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ocr-crop-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ocr-crop-head strong {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.ocr-crop-head span {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .ocr-debug-body {
+    grid-template-columns: 1fr;
+  }
 }
 
 .detail-meta {

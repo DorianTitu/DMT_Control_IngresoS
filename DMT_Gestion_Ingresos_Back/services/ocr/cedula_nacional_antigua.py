@@ -6,6 +6,22 @@ VARIACIONES_NOMBRES = {
     "NOMBRES", "MOMBRES", "NOMARES", "NOMBFES", "NQMBRES", "NOMORES",
 }
 
+TEXTOS_IGNORADOS_ANTIGUA = {
+    "CEDULA", "CÉDULA", "CIUDADANIA", "CIUDADANÍA", "APELLIDOS", "NOMBRES",
+    "APELLIDOS Y NOMBRES", "APELLIDOS NOMBRES", "DIRECCION", "DIRECCIÓN",
+    "IDENTIFICACION", "IDENTIFICACIÓN", "CEDULACION", "CEDULACIÓN",
+    "EDULACION", "EDULACIOM",
+}
+
+
+def _ultimos_10_digitos(texto: str) -> str:
+    return re.sub(r"\D", "", texto or "")[-10:]
+
+
+def _normalizar_etiqueta(texto: str) -> str:
+    texto = (texto or "").upper()
+    return texto.translate(str.maketrans({"0": "O", "1": "I", "8": "B"}))
+
 
 class CedulaNacionalAntiguaOCR(BaseCedulaNacionalOCR):
     """OCR para cédulas antiguas de Ecuador."""
@@ -22,14 +38,41 @@ class CedulaNacionalAntiguaOCR(BaseCedulaNacionalOCR):
     def _extraer_numero_cedula_antigua(self, componentes: list) -> dict:
         for comp in componentes:
             texto = comp.get("texto", "").strip()
-            numero = re.sub(r"\D", "", texto)
+            numero = _ultimos_10_digitos(texto)
             if len(numero) >= 10:
-                return {"numero": numero[:10], "confianza": comp.get("confianza", 0)}
+                return {"numero": numero, "confianza": comp.get("confianza", 0)}
         return {"numero": "", "confianza": 0}
 
     def _parsear_nombres_apellidos_antigua(self, componentes: list) -> dict:
         if not componentes:
             return {"apellidos": "", "nombres": "", "confianza_apellidos": 0.0, "confianza_nombres": 0.0}
+
+        lineas = []
+        for comp in componentes:
+            texto = comp.get("texto", "").upper().strip()
+            texto = re.sub(r"\s+", " ", texto)
+            etiqueta = _normalizar_etiqueta(texto)
+            if not texto or etiqueta in TEXTOS_IGNORADOS_ANTIGUA:
+                continue
+            if "APELLIDO" in etiqueta or "NOMBRE" in etiqueta or ("NOM" in etiqueta and "RES" in etiqueta):
+                continue
+            if "CEDULA" in etiqueta or "CÉDULA" in etiqueta or "CIUDADANIA" in etiqueta or "CIUDADANÍA" in etiqueta:
+                continue
+            if "DIRECCI" in etiqueta or "IDENTIF" in etiqueta or "EDULA" in etiqueta:
+                continue
+            if re.fullmatch(r"[\d\W_]+", texto):
+                continue
+            lineas.append({"texto": texto, "confianza": comp.get("confianza", 0)})
+
+        if len(lineas) >= 2:
+            apellidos_comps = [lineas[0]]
+            nombres_comps = [lineas[1]]
+            return {
+                "apellidos": lineas[0]["texto"],
+                "nombres": lineas[1]["texto"],
+                "confianza_apellidos": self.calcular_confianza_promedio(apellidos_comps),
+                "confianza_nombres": self.calcular_confianza_promedio(nombres_comps),
+            }
 
         indice_nombres = next(
             (i for i, c in enumerate(componentes) if c.get("texto", "").upper().strip() in VARIACIONES_NOMBRES),

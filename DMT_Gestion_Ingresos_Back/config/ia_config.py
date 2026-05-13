@@ -18,7 +18,8 @@ IA_CONFIG = {
 # System instruction — Gemini es un EXTRACTOR simple de campos
 # Balance: Detalles suficientes + velocidad
 SYSTEM_INSTRUCTION = (
-    "Extrae de un texto OCR: cedula (10 dígitos), nombres, apellidos. "
+    "Extrae de un texto OCR: cedula (últimos 10 dígitos detectados), nombres, apellidos. "
+    "Si el campo NUM contiene 10 dígitos, usa esos dígitos exactos como cedula. "
     "Corrige errores OCR obvios (0→O, 1→I, D0→DO, etc.). "
     "Responde SOLO JSON: {\"cedula\":\"...\",\"nombres\":\"...\",\"apellidos\":\"...\"}"
 )

@@ -12,6 +12,7 @@ import {
   ListarIngresosResponse,
   MetricsData,
   MotivoCatalogo,
+  OcrDebugZonasResponse,
   ProcesarCedulaResponse,
   TipoCedula,
   TipoIngreso,
@@ -78,6 +79,17 @@ class ApiService {
         tipo_cedula: tipoCedula,
         tipo_camara: tipoCamara,
       }),
+    })
+  }
+
+  debugZonasOcr(
+    imagenBase64: string,
+    tipoCedula: TipoCedula,
+    tipoCamara: TipoIngreso,
+  ): Promise<OcrDebugZonasResponse> {
+    return this.request<OcrDebugZonasResponse>(`/ocr/debug/zonas?tipo_camara=${tipoCamara}&tipo_cedula=${tipoCedula}`, {
+      method: 'POST',
+      body: JSON.stringify({ imagen_base64: imagenBase64 }),
     })
   }
 

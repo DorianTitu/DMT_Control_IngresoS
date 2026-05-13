@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { apiService } from '@/services/api'
-import { CatalogoItem, CupoVehicular, MotivoCatalogo, TipoCedula } from '@/types'
+import { CatalogoItem, CupoVehicular, MotivoCatalogo, OcrDebugZonasResponse, TipoCedula } from '@/types'
 
 interface FormVehicularProps {
   onClose: () => void
@@ -20,6 +20,7 @@ export const FormVehicular: React.FC<FormVehicularProps> = ({ onClose, onSubmit 
   const [departamentos, setDepartamentos] = useState<CatalogoItem[]>([])
   const [motivos, setMotivos] = useState<MotivoCatalogo[]>([])
   const [cupos, setCupos] = useState<CupoVehicular[]>([])
+  const [zonasOcr, setZonasOcr] = useState<OcrDebugZonasResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -58,6 +59,26 @@ export const FormVehicular: React.FC<FormVehicularProps> = ({ onClose, onSubmit 
     }
     fetchMotivos()
   }, [departamentos, formData.departamento])
+
+  useEffect(() => {
+    if (!imagenes?.cedula) {
+      setZonasOcr(null)
+      return
+    }
+
+    let activo = true
+    apiService.debugZonasOcr(imagenes.cedula, formData.tipoCedula, 'vehicular')
+      .then((data) => {
+        if (activo) setZonasOcr(data)
+      })
+      .catch(() => {
+        if (activo) setZonasOcr(null)
+      })
+
+    return () => {
+      activo = false
+    }
+  }, [imagenes?.cedula, formData.tipoCedula])
 
   const cupoSeleccionado = cupos.find((item) => item.departamento === formData.departamento)
 
@@ -145,7 +166,18 @@ export const FormVehicular: React.FC<FormVehicularProps> = ({ onClose, onSubmit 
           <div className="photo-col">
             <div className="photo-box tall-vehicle">
               {imagenes?.cedula ? (
-                <img src={`data:image/jpeg;base64,${imagenes.cedula}`} alt="Cédula conductor" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <>
+                  <img
+                    src={
+                      zonasOcr?.imagen_marcada_base64
+                        ? `data:image/png;base64,${zonasOcr.imagen_marcada_base64}`
+                        : `data:image/jpeg;base64,${imagenes.cedula}`
+                    }
+                    alt="Cédula conductor con zonas OCR"
+                    className="photo-img"
+                  />
+                  <span className="ocr-zone-badge">Zonas OCR</span>
+                </>
               ) : (
                 <div className="photo-add">+</div>
               )}

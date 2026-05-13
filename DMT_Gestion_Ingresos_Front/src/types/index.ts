@@ -112,6 +112,15 @@ export interface ProcesarCedulaResponse {
   }
 }
 
+export interface OcrDebugZonasResponse {
+  tipo_camara: TipoIngreso
+  tipo_cedula: TipoCedula
+  dimensiones_imagen: { width: number; height: number }
+  zonas: Record<string, number[]>
+  imagen_marcada_base64: string
+  recortes: Record<string, { label: string; zona: number[]; imagen_base64: string }>
+}
+
 export interface CrearIngresoPayload {
   numero_cedula: string
   nombres: string
