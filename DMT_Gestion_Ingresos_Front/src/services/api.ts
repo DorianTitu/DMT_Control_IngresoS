@@ -13,6 +13,7 @@ import {
   MetricsData,
   MotivoCatalogo,
   OcrDebugZonasResponse,
+  PersonaPorCedulaResponse,
   ProcesarCedulaResponse,
   TipoCedula,
   TipoIngreso,
@@ -112,6 +113,10 @@ class ApiService {
   leerIngreso(tipo: TipoIngreso, ticket: string): Promise<LeerIngresoResponse> {
     const endpoint = tipo === 'peatonal' ? `/ingresos-peatonal/${ticket}` : `/ingresos-vehicular/${ticket}`
     return this.request<LeerIngresoResponse>(endpoint)
+  }
+
+  buscarPersonaPorCedula(numeroCedula: string): Promise<PersonaPorCedulaResponse> {
+    return this.request<PersonaPorCedulaResponse>(`/ingresos/persona/${encodeURIComponent(numeroCedula)}`)
   }
 
   actualizarIngreso(tipo: TipoIngreso, ticket: string, data: ActualizarIngresoPayload): Promise<{ exito: boolean; ticket: string; mensaje: string }> {

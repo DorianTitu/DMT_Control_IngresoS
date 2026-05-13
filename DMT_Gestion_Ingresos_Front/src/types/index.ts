@@ -40,6 +40,15 @@ export interface IngresoDetalle extends IngresoRegistro {
   imagen_placa_base64?: string
 }
 
+export interface PersonaPorCedulaResponse {
+  encontrado: boolean
+  cedula: string
+  nombres?: string
+  apellidos?: string
+  ultimo_ticket?: string
+  fecha_ingreso?: string
+}
+
 export interface LeerIngresoResponse {
   exito: boolean
   datos: IngresoDetalle

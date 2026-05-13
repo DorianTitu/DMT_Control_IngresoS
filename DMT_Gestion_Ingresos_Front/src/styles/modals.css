@@ -13,7 +13,7 @@
 /* MODAL CONTAINER */
 .modal {
   background: var(--surface);
-  border: 1px solid var(--border-2);
+  border: none;
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
@@ -165,7 +165,8 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #111;
 }
 
 .photo-box:has(img) .photo-label {
@@ -501,6 +502,7 @@
 .detail-photo {
   height: 180px;
   overflow: hidden;
+  background: #111;
 }
 
 .detail-photo-button {
@@ -513,7 +515,8 @@
 .detail-photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #111;
 }
 
 .image-zoom-hint {
@@ -676,6 +679,58 @@
   color: #b42318;
   font-size: 14px;
   background: var(--bg);
+}
+
+.form-info {
+  margin: 0 28px 12px;
+  border: 1px solid rgba(22, 163, 74, 0.22);
+  background: rgba(22, 163, 74, 0.08);
+  color: #15803d;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.saving-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.42);
+}
+
+.saving-box {
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+}
+
+.saving-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border-2);
+  border-top-color: var(--color-primary);
+  animation: saving-spin 0.8s linear infinite;
+}
+
+@keyframes saving-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .export-modal {
@@ -1009,7 +1064,7 @@
 
 .dept-config-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 220px;
+  grid-template-columns: minmax(0, 1fr) 240px 180px;
   gap: 12px;
 }
 
@@ -1022,6 +1077,55 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.aforo-toggle {
+  min-height: 45px;
+  border: 1px solid var(--border-2);
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.aforo-toggle span {
+  color: var(--text-hint);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.aforo-toggle strong {
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.aforo-toggle.active {
+  border-color: rgba(22, 163, 74, 0.35);
+  background: rgba(22, 163, 74, 0.08);
+}
+
+.aforo-toggle.active strong {
+  color: #15803d;
+}
+
+.aforo-help {
+  border: 1px solid rgba(37, 99, 235, 0.18);
+  background: rgba(37, 99, 235, 0.06);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .parking-status {

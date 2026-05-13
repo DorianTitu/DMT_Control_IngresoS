@@ -121,7 +121,7 @@ class CatalogosStore:
             data = self._load_unlocked()
             for item in data[collection]:
                 if item["id"] == item_id:
-                    clean_payload = {key: value for key, value in payload.items() if value is not None}
+                    clean_payload = dict(payload)
                     if "nombre" in clean_payload:
                         clean_payload["nombre"] = clean_payload["nombre"].strip()
                     item.update(clean_payload)

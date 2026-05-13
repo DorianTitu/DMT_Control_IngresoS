@@ -28,6 +28,11 @@ async def cupos_vehiculares():
     return await run_in_threadpool(GestorIngresosDB.cupos_vehiculares)
 
 
+@router.get("/ingresos/persona/{numero_cedula}")
+async def buscar_persona_por_cedula(numero_cedula: str):
+    return await run_in_threadpool(GestorIngresosDB.buscar_persona_por_cedula, numero_cedula)
+
+
 @router.get("/ingresos/exportar")
 async def exportar_ingresos(
     fecha: Optional[str] = None,

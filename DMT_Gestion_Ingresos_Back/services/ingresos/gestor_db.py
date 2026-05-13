@@ -189,6 +189,31 @@ class GestorIngresosDB:
             }
 
     @staticmethod
+    def buscar_persona_por_cedula(numero_cedula: str) -> dict:
+        cedula = "".join(ch for ch in str(numero_cedula or "") if ch.isdigit())[-10:]
+        if len(cedula) != 10:
+            return {"encontrado": False, "cedula": cedula}
+
+        with SessionLocal() as db:
+            ingreso = db.execute(
+                select(Ingreso)
+                .where(Ingreso.numero_cedula == cedula)
+                .order_by(Ingreso.created_at.desc(), Ingreso.id.desc())
+            ).scalars().first()
+
+            if not ingreso:
+                return {"encontrado": False, "cedula": cedula}
+
+            return {
+                "encontrado": True,
+                "cedula": ingreso.numero_cedula,
+                "nombres": ingreso.nombres,
+                "apellidos": ingreso.apellidos,
+                "ultimo_ticket": ingreso.ticket,
+                "fecha_ingreso": _fecha_str(ingreso.fecha_ingreso),
+            }
+
+    @staticmethod
     def listar_todos_por_dia(fecha_str: str) -> dict:
         try:
             fecha = _parse_fecha(fecha_str)

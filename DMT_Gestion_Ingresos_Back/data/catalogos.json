@@ -4,7 +4,7 @@
       "id": "dpto-1a",
       "nombre": "Parroquia",
       "activo": true,
-      "cupo_vehicular": 10,
+      "cupo_vehicular": null,
       "parqueo_reset_at": "2026-05-12T22:09:20"
     },
     {
@@ -39,21 +39,21 @@
     },
     {
       "id": "trabajador",
-      "nombre": "Trabajador",
+      "nombre": "Eucaristia",
       "tipo": "peatonal",
       "activo": true,
       "departamento_id": "dpto-1a"
     },
     {
       "id": "entrega",
-      "nombre": "Entrega",
+      "nombre": "AA",
       "tipo": "ambos",
       "activo": true,
       "departamento_id": "dpto-1a"
     },
     {
       "id": "residente",
-      "nombre": "Residente",
+      "nombre": "Curso de boda",
       "tipo": "vehicular",
       "activo": true,
       "departamento_id": "dpto-1a"

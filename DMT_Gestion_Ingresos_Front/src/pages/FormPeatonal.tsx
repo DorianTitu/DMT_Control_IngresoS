@@ -7,6 +7,8 @@ interface FormPeatonalProps {
   onSubmit: (data: any) => void
 }
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
     nombres: '',
@@ -21,7 +23,9 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
   const [motivos, setMotivos] = useState<MotivoCatalogo[]>([])
   const [zonasOcr, setZonasOcr] = useState<OcrDebugZonasResponse | null>(null)
   const [loading, setLoading] = useState(false)
+  const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [info, setInfo] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchCatalogos = async () => {
@@ -90,17 +94,34 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
   const handleCapturar = async () => {
     setLoading(true)
     setError(null)
+    setInfo(null)
     try {
       const captura = await apiService.capturarRegistro('peatonal')
       setImagenes(captura.imagenes)
 
       const ia = await apiService.procesarCedulaConIA(captura.imagenes.cedula, formData.tipoCedula, 'peatonal')
       const datos = ia.resultado_ia
+      let datosFinales = {
+        cedula: datos.cedula,
+        nombres: datos.nombres,
+        apellidos: datos.apellidos,
+      }
+      if (datos.cedula) {
+        const persona = await apiService.buscarPersonaPorCedula(datos.cedula)
+        if (persona.encontrado) {
+          datosFinales = {
+            cedula: persona.cedula,
+            nombres: persona.nombres || datos.nombres,
+            apellidos: persona.apellidos || datos.apellidos,
+          }
+          setInfo(`Datos recuperados de registros anteriores: ${persona.ultimo_ticket}`)
+        }
+      }
       setFormData(prev => ({
         ...prev,
-        cedula: datos.cedula || prev.cedula,
-        nombres: datos.nombres || prev.nombres,
-        apellidos: datos.apellidos || prev.apellidos,
+        cedula: datosFinales.cedula || prev.cedula,
+        nombres: datosFinales.nombres || prev.nombres,
+        apellidos: datosFinales.apellidos || prev.apellidos,
       }))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'No se pudo capturar/procesar la cédula')
@@ -110,31 +131,34 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
   }
 
   const handleSubmit = async () => {
-    setLoading(true)
+    setSaving(true)
     setError(null)
     try {
       if (!imagenes) {
         throw new Error('Primero captura las imágenes del registro')
       }
-      const response = await apiService.crearIngreso('peatonal', {
-        numero_cedula: formData.cedula,
-        nombres: formData.nombres,
-        apellidos: formData.apellidos,
-        hora_entrada: new Date().toLocaleTimeString('es-ES', {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
+      const [response] = await Promise.all([
+        apiService.crearIngreso('peatonal', {
+          numero_cedula: formData.cedula,
+          nombres: formData.nombres,
+          apellidos: formData.apellidos,
+          hora_entrada: new Date().toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          }),
+          departamento: formData.departamento,
+          motivo: formData.motivo,
+          imagen_usuario_base64: imagenes.usuario,
+          imagen_cedula_base64: imagenes.cedula,
         }),
-        departamento: formData.departamento,
-        motivo: formData.motivo,
-        imagen_usuario_base64: imagenes.usuario,
-        imagen_cedula_base64: imagenes.cedula,
-      })
+        delay(1000),
+      ])
       onSubmit(response)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'No se pudo guardar el registro')
     } finally {
-      setLoading(false)
+      setSaving(false)
     }
   }
 
@@ -301,6 +325,7 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
             {error}
           </div>
         )}
+        {info && <div className="form-info">{info}</div>}
 
         <div className="modal-footer">
           <button className="btn-capture" onClick={handleCapturar} disabled={loading}>
@@ -308,10 +333,11 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
           </button>
           <div className="footer-right">
             <button onClick={onClose} className="btn-cancel">Cancelar</button>
-            <button onClick={handleSubmit} className="btn-save" disabled={loading}>Guardar Registro</button>
+            <button onClick={handleSubmit} className="btn-save" disabled={loading || saving}>Guardar Registro</button>
           </div>
         </div>
       </div>
+      {saving && <div className="saving-overlay"><div className="saving-box"><span className="saving-spinner" />Guardando registro...</div></div>}
     </div>
   )
 }

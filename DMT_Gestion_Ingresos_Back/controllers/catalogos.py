@@ -56,7 +56,7 @@ async def crear_departamento(payload: DepartamentoCreate):
 @router.put("/departamentos/{item_id}")
 async def actualizar_departamento(item_id: str, payload: DepartamentoUpdate):
     try:
-        return store.actualizar_departamento(item_id, payload.dict())
+        return store.actualizar_departamento(item_id, payload.dict(exclude_unset=True))
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
@@ -94,7 +94,7 @@ async def crear_motivo(payload: MotivoCreate):
 @router.put("/motivos/{item_id}")
 async def actualizar_motivo(item_id: str, payload: MotivoUpdate):
     try:
-        return store.actualizar_motivo(item_id, payload.dict())
+        return store.actualizar_motivo(item_id, payload.dict(exclude_unset=True))
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 

@@ -9,6 +9,8 @@ interface IngresoDetalleModalProps {
   onSaved: () => void
 }
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export const IngresoDetalleModal: React.FC<IngresoDetalleModalProps> = ({ tipo, ticket, onClose, onSaved }) => {
   const [detalle, setDetalle] = useState<IngresoDetalle | null>(null)
   const [departamentos, setDepartamentos] = useState<CatalogoItem[]>([])
@@ -66,13 +68,16 @@ export const IngresoDetalleModal: React.FC<IngresoDetalleModalProps> = ({ tipo, 
     setSaving(true)
     setError(null)
     try {
-      await apiService.actualizarIngreso(tipo, ticket, {
-        numero_cedula: detalle.numero_cedula,
-        nombres: detalle.nombres,
-        apellidos: detalle.apellidos,
-        departamento: detalle.departamento,
-        motivo: detalle.motivo,
-      })
+      await Promise.all([
+        apiService.actualizarIngreso(tipo, ticket, {
+          numero_cedula: detalle.numero_cedula,
+          nombres: detalle.nombres,
+          apellidos: detalle.apellidos,
+          departamento: detalle.departamento,
+          motivo: detalle.motivo,
+        }),
+        delay(1000),
+      ])
       onSaved()
       await loadData()
     } catch (err) {
@@ -197,6 +202,15 @@ export const IngresoDetalleModal: React.FC<IngresoDetalleModalProps> = ({ tipo, 
               <button type="button" onClick={() => setPreviewImage(null)} className="btn-close">×</button>
             </div>
             <img src={`data:image/jpeg;base64,${previewImage.base64}`} alt={previewImage.label} />
+          </div>
+        </div>
+      )}
+
+      {saving && (
+        <div className="saving-overlay">
+          <div className="saving-box">
+            <span className="saving-spinner" />
+            Guardando cambios...
           </div>
         </div>
       )}

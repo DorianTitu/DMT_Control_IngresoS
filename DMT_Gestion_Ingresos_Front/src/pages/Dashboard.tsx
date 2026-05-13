@@ -16,7 +16,19 @@ interface DashboardProps {
 export const Dashboard: React.FC<DashboardProps> = ({ onNewRegistro, onToggleTheme, onConfig, currentTheme }) => {
   const [activeTab, setActiveTab] = useState<'vehicular' | 'peatonal'>('vehicular')
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
+  const formatLocalDateInput = (date: Date) => {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+
+  const parseLocalDateInput = (value: string) => {
+    const [year, month, day] = value.split('-').map(Number)
+    return new Date(year, month - 1, day)
+  }
+
+  const [selectedDate, setSelectedDate] = useState(formatLocalDateInput(new Date()))
   const [currentPage, setCurrentPage] = useState(0)
   const [drilldownOpen, setDrilldownOpen] = useState<'peatonal' | 'vehicular' | null>(null)
   const [detalleTicket, setDetalleTicket] = useState<{ tipo: TipoIngreso; ticket: string } | null>(null)
@@ -126,6 +138,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNewRegistro, onToggleThe
     }
   }
 
+  const handleDateOffset = (days: number) => {
+    const nextDate = parseLocalDateInput(selectedDate)
+    nextDate.setDate(nextDate.getDate() + days)
+    setSelectedDate(formatLocalDateInput(nextDate))
+  }
+
   const handleRegistrarSalida = async (tipo: TipoIngreso, ticket: string) => {
     await apiService.registrarSalida(tipo, ticket)
     await fetchRegistros()
@@ -182,7 +200,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNewRegistro, onToggleThe
             >
               <p className="stat-label">Ingresos Peatonales</p>
               <p className="stat-value">{peatonalStats.total}</p>
-              <p className="stat-sub">registros hoy</p>
+              <p className="stat-sub">registros del día</p>
             </div>
 
             <div 
@@ -192,13 +210,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNewRegistro, onToggleThe
             >
               <p className="stat-label">Ingresos Vehiculares</p>
               <p className="stat-value">{vehicularStats.total}</p>
-              <p className="stat-sub">registros hoy</p>
+              <p className="stat-sub">registros del día</p>
             </div>
 
             <div className="stat-card">
               <p className="stat-label">Total Ingresos</p>
               <p className="stat-value neutral">{peatonalStats.total + vehicularStats.total}</p>
-              <p className="stat-sub">registros hoy</p>
+              <p className="stat-sub">registros del día</p>
             </div>
 
             <div className="tabs-card">
@@ -220,7 +238,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNewRegistro, onToggleThe
           <div className="toolbar">
             <span className="toolbar-label">Fecha</span>
             <div className="toolbar-date-wrap">
-              <button className="toolbar-nav-btn" title="Fecha anterior">
+              <button className="toolbar-nav-btn" title="Fecha anterior" onClick={() => handleDateOffset(-1)}>
                 <IconChevronLeft size={16} color="currentColor" />
               </button>
               <input
@@ -229,7 +247,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNewRegistro, onToggleThe
               onChange={(e) => setSelectedDate(e.target.value)}
                 className="toolbar-date"
               />
-              <button className="toolbar-nav-btn" title="Fecha siguiente">
+              <button className="toolbar-nav-btn" title="Fecha siguiente" onClick={() => handleDateOffset(1)}>
                 <IconChevronRight size={16} color="currentColor" />
               </button>
             </div>

@@ -6,6 +6,8 @@ interface CatalogosConfigProps {
   onClose: () => void
 }
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => {
   const [departamentos, setDepartamentos] = useState<CatalogoItem[]>([])
   const [motivos, setMotivos] = useState<MotivoCatalogo[]>([])
@@ -14,10 +16,23 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
   const [nuevoDepartamento, setNuevoDepartamento] = useState('')
   const [nuevoMotivo, setNuevoMotivo] = useState('')
   const [tipoMotivo, setTipoMotivo] = useState<TipoMotivo>('ambos')
-  const [deptDraft, setDeptDraft] = useState({ nombre: '', cupo_vehicular: '' })
+  const [deptDraft, setDeptDraft] = useState({ nombre: '', cupo_vehicular: '', aforo_vehicular_activo: false })
   const [motivoDrafts, setMotivoDrafts] = useState<Record<string, { nombre: string; tipo: TipoMotivo }>>({})
   const [loading, setLoading] = useState(false)
+  const [actionMessage, setActionMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  const withActionFeedback = async (message: string, action: () => Promise<void>) => {
+    setActionMessage(message)
+    setError(null)
+    try {
+      await Promise.all([action(), delay(1000)])
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'No se pudo completar la acción')
+    } finally {
+      setActionMessage(null)
+    }
+  }
 
   const fetchCatalogos = async () => {
     setLoading(true)
@@ -66,66 +81,87 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
     setDeptDraft({
       nombre: selectedDepartamento.nombre,
       cupo_vehicular: selectedDepartamento.cupo_vehicular == null ? '' : String(selectedDepartamento.cupo_vehicular),
+      aforo_vehicular_activo: selectedDepartamento.cupo_vehicular != null,
     })
   }, [selectedDepartamento])
 
   const handleCrearDepartamento = async () => {
     if (!nuevoDepartamento.trim()) return
-    const creado = await apiService.createDepartamento(nuevoDepartamento.trim(), null)
-    setNuevoDepartamento('')
-    setSelectedDeptId(creado.id)
-    await fetchCatalogos()
+    await withActionFeedback('Agregando departamento...', async () => {
+      const creado = await apiService.createDepartamento(nuevoDepartamento.trim(), null)
+      setNuevoDepartamento('')
+      setSelectedDeptId(creado.id)
+      await fetchCatalogos()
+    })
   }
 
   const handleGuardarDepartamento = async () => {
     if (!selectedDepartamento) return
-    await apiService.updateDepartamento(selectedDepartamento.id, {
-      nombre: deptDraft.nombre,
-      cupo_vehicular: deptDraft.cupo_vehicular ? Number(deptDraft.cupo_vehicular) : null,
-      activo: selectedDepartamento.activo,
+    if (deptDraft.aforo_vehicular_activo && !deptDraft.cupo_vehicular) {
+      setError('Ingresa el cupo vehicular máximo o desactiva el control de aforo.')
+      return
+    }
+    await withActionFeedback('Guardando departamento...', async () => {
+      await apiService.updateDepartamento(selectedDepartamento.id, {
+        nombre: deptDraft.nombre,
+        cupo_vehicular: deptDraft.aforo_vehicular_activo ? Number(deptDraft.cupo_vehicular) : null,
+        activo: selectedDepartamento.activo,
+      })
+      await fetchCatalogos()
     })
-    await fetchCatalogos()
   }
 
   const handleToggleDepartamento = async () => {
     if (!selectedDepartamento) return
-    await apiService.updateDepartamento(selectedDepartamento.id, { activo: !selectedDepartamento.activo })
-    await fetchCatalogos()
+    await withActionFeedback(selectedDepartamento.activo ? 'Desactivando departamento...' : 'Reactivando departamento...', async () => {
+      await apiService.updateDepartamento(selectedDepartamento.id, { activo: !selectedDepartamento.activo })
+      await fetchCatalogos()
+    })
   }
 
   const handleResetParqueo = async () => {
     if (!selectedDepartamento) return
-    await apiService.resetParqueoDepartamento(selectedDepartamento.id)
-    await fetchCatalogos()
+    await withActionFeedback('Reseteando cupos vehiculares...', async () => {
+      await apiService.resetParqueoDepartamento(selectedDepartamento.id)
+      await fetchCatalogos()
+    })
   }
 
   const handleCrearMotivo = async () => {
     if (!nuevoMotivo.trim() || !selectedDeptId) return
-    await apiService.createMotivo(nuevoMotivo.trim(), tipoMotivo, selectedDeptId)
-    setNuevoMotivo('')
-    setTipoMotivo('ambos')
-    await fetchCatalogos()
+    await withActionFeedback('Agregando motivo...', async () => {
+      await apiService.createMotivo(nuevoMotivo.trim(), tipoMotivo, selectedDeptId)
+      setNuevoMotivo('')
+      setTipoMotivo('ambos')
+      await fetchCatalogos()
+    })
   }
 
   const handleGuardarMotivo = async (item: MotivoCatalogo) => {
     const next = motivoDrafts[item.id] || { nombre: item.nombre, tipo: item.tipo }
-    await apiService.updateMotivo(item.id, {
-      nombre: next.nombre,
-      tipo: next.tipo,
-      departamento_id: selectedDeptId,
-      activo: item.activo,
+    await withActionFeedback('Guardando motivo...', async () => {
+      await apiService.updateMotivo(item.id, {
+        nombre: next.nombre,
+        tipo: next.tipo,
+        departamento_id: selectedDeptId,
+        activo: item.activo,
+      })
+      await fetchCatalogos()
     })
-    await fetchCatalogos()
   }
 
   const handleMoverMotivo = async (item: MotivoCatalogo, departamentoId: string) => {
-    await apiService.updateMotivo(item.id, { departamento_id: departamentoId })
-    await fetchCatalogos()
+    await withActionFeedback('Moviendo motivo...', async () => {
+      await apiService.updateMotivo(item.id, { departamento_id: departamentoId })
+      await fetchCatalogos()
+    })
   }
 
   const handleToggleMotivo = async (item: MotivoCatalogo) => {
-    await apiService.updateMotivo(item.id, { activo: !item.activo })
-    await fetchCatalogos()
+    await withActionFeedback(item.activo ? 'Desactivando motivo...' : 'Reactivando motivo...', async () => {
+      await apiService.updateMotivo(item.id, { activo: !item.activo })
+      await fetchCatalogos()
+    })
   }
 
   return (
@@ -155,7 +191,7 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
                 onChange={(event) => setNuevoDepartamento(event.target.value)}
                 placeholder="Nuevo departamento"
               />
-              <button type="button" className="btn-save" onClick={handleCrearDepartamento} disabled={loading}>Agregar</button>
+              <button type="button" className="btn-save" onClick={handleCrearDepartamento} disabled={loading || !!actionMessage}>Agregar</button>
             </div>
 
             <div className="department-list">
@@ -201,16 +237,37 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
                       />
                     </label>
                     <label>
-                      Cupo vehicular máximo
-                      <input
-                        className="form-input"
-                        type="number"
-                        min="0"
-                        value={deptDraft.cupo_vehicular}
-                        onChange={(event) => setDeptDraft((prev) => ({ ...prev, cupo_vehicular: event.target.value }))}
-                        placeholder="Sin límite"
-                      />
+                      Control de aforo vehicular
+                      <button
+                        type="button"
+                        className={`aforo-toggle ${deptDraft.aforo_vehicular_activo ? 'active' : ''}`}
+                        onClick={() => setDeptDraft((prev) => ({
+                          ...prev,
+                          aforo_vehicular_activo: !prev.aforo_vehicular_activo,
+                          cupo_vehicular: prev.aforo_vehicular_activo ? '' : (prev.cupo_vehicular || '10'),
+                        }))}
+                      >
+                        <span>{deptDraft.aforo_vehicular_activo ? 'Activado' : 'Desactivado'}</span>
+                        <strong>{deptDraft.aforo_vehicular_activo ? 'Controlar cupos' : 'Sin límite'}</strong>
+                      </button>
                     </label>
+                    {deptDraft.aforo_vehicular_activo && (
+                      <label>
+                        Cupo vehicular máximo
+                        <input
+                          className="form-input"
+                          type="number"
+                          min="1"
+                          value={deptDraft.cupo_vehicular}
+                          onChange={(event) => setDeptDraft((prev) => ({ ...prev, cupo_vehicular: event.target.value }))}
+                          placeholder="Ej. 10"
+                        />
+                      </label>
+                    )}
+                  </div>
+
+                  <div className="aforo-help">
+                    El aforo se descuenta solo con ingresos vehiculares activos. Los ingresos peatonales al mismo departamento o motivo no ocupan parqueadero.
                   </div>
 
                   <div className={`parking-status ${cupoDepartamento?.lleno ? 'full' : ''}`}>
@@ -222,12 +279,12 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
                           : `${cupoDepartamento.ocupados}/${cupoDepartamento.cupo_vehicular} cupos ocupados`}
                       </span>
                     </div>
-                    <button type="button" className="btn-small muted" onClick={handleResetParqueo}>Resetear a cero</button>
+                    <button type="button" className="btn-small muted" onClick={handleResetParqueo} disabled={!!actionMessage}>Resetear a cero</button>
                   </div>
 
                   <div className="catalog-actions">
-                    <button type="button" className="btn-save" onClick={handleGuardarDepartamento}>Guardar departamento</button>
-                    <button type="button" className="btn-small muted" onClick={handleToggleDepartamento}>
+                    <button type="button" className="btn-save" onClick={handleGuardarDepartamento} disabled={!!actionMessage}>Guardar departamento</button>
+                    <button type="button" className="btn-small muted" onClick={handleToggleDepartamento} disabled={!!actionMessage}>
                       {selectedDepartamento.activo ? 'Desactivar' : 'Reactivar'}
                     </button>
                   </div>
@@ -251,7 +308,7 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
                       <option value="peatonal">Peatonal</option>
                       <option value="vehicular">Vehicular</option>
                     </select>
-                    <button type="button" className="btn-save" onClick={handleCrearMotivo}>Agregar</button>
+                    <button type="button" className="btn-save" onClick={handleCrearMotivo} disabled={!!actionMessage}>Agregar</button>
                   </div>
 
                   <div className="motives-list">
@@ -289,8 +346,8 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
                           {departamentos.map((dept) => <option key={dept.id} value={dept.id}>{dept.nombre}</option>)}
                         </select>
                         <div className="catalog-actions">
-                          <button type="button" className="btn-small" onClick={() => handleGuardarMotivo(item)}>Guardar</button>
-                          <button type="button" className="btn-small muted" onClick={() => handleToggleMotivo(item)}>
+                          <button type="button" className="btn-small" onClick={() => handleGuardarMotivo(item)} disabled={!!actionMessage}>Guardar</button>
+                          <button type="button" className="btn-small muted" onClick={() => handleToggleMotivo(item)} disabled={!!actionMessage}>
                             {item.activo ? 'Desactivar' : 'Reactivar'}
                           </button>
                         </div>
@@ -303,6 +360,7 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
           </main>
         </div>
       </div>
+      {actionMessage && <div className="saving-overlay"><div className="saving-box"><span className="saving-spinner" />{actionMessage}</div></div>}
     </div>
   )
 }
