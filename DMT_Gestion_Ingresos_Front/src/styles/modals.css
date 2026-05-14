@@ -21,6 +21,90 @@
   box-shadow: 0 20px 25px rgba(0, 0, 0, 0.3);
 }
 
+.compact-entry-modal {
+  max-width: 960px;
+}
+
+.compact-entry-modal .modal-header {
+  padding: 14px 24px;
+}
+
+.compact-entry-modal .modal-title {
+  font-size: 16px;
+}
+
+.compact-entry-modal .modal-eyebrow {
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
+.compact-entry-modal .modal-body {
+  padding: 24px;
+  gap: 22px;
+}
+
+.compact-entry-modal .fields {
+  gap: 10px;
+  padding: 18px;
+}
+
+.compact-entry-modal .form-group {
+  gap: 4px;
+}
+
+.compact-entry-modal .form-label {
+  font-size: 12px;
+}
+
+.compact-entry-modal .form-input,
+.compact-entry-modal .form-select {
+  padding: 9px 11px;
+  font-size: 14px;
+}
+
+.compact-entry-modal .photo-col {
+  gap: 10px;
+}
+
+.compact-entry-modal .photo-box.tall {
+  height: 220px;
+}
+
+.compact-entry-modal .photo-box.tall-vehicle {
+  height: 230px;
+}
+
+.compact-entry-modal .photo-box.med {
+  height: 150px;
+}
+
+.compact-entry-modal .two-col {
+  gap: 10px;
+}
+
+.compact-entry-modal .modal-footer {
+  padding: 13px 24px;
+}
+
+.compact-entry-modal .radio-row {
+  gap: 20px;
+}
+
+.compact-entry-modal .radio-option {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.compact-entry-modal .radio-circle {
+  width: 17px;
+  height: 17px;
+}
+
+.compact-entry-modal .radio-circle.active::after {
+  width: 8px;
+  height: 8px;
+}
+
 /* MODAL HEADER */
 .modal-header {
   padding: 18px 28px;

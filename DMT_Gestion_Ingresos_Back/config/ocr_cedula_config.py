@@ -12,30 +12,37 @@ from config.settings import OCR_RESULTADOS_DIR
 # ZONAS DE RECORTE POR CÁMARA Y TIPO DE CÉDULA
 # Dimensiones: 1200x720 píxeles
 # =============================================
-ZONA_NUMERO_NUEVA = (65, 515, 445, 610)
-ZONA_NOMBRES_NUEVA = (315, 110, 650, 315)
-ZONA_NUMERO_ANTIGUA = (640, 125, 930, 220)
-ZONA_NOMBRES_ANTIGUA = (340, 210, 650, 305)
+ZONA_NUMERO_NUEVA_PEATONAL = (65, 515, 445, 610)
+ZONA_NOMBRES_NUEVA_PEATONAL = (315, 110, 650, 315)
+ZONA_NUMERO_ANTIGUA_PEATONAL = (640, 125, 930, 220)
+ZONA_NOMBRES_ANTIGUA_PEATONAL = (340, 210, 650, 305)
+
+# Zonas vehiculares separadas. Inicialmente copian los valores peatonales
+# para no cambiar comportamiento; se ajustarán con capturas vehiculares.
+ZONA_NUMERO_NUEVA_VEHICULAR = (65, 515, 445, 610)
+ZONA_NOMBRES_NUEVA_VEHICULAR = (315, 110, 650, 315)
+ZONA_NUMERO_ANTIGUA_VEHICULAR = (640, 125, 930, 220)
+ZONA_NOMBRES_ANTIGUA_VEHICULAR = (340, 210, 650, 305)
 
 OCR_ZONAS = {
     "peatonal": {
         "nueva": {
-            "zona_numero": ZONA_NUMERO_NUEVA,                    # Número NUI
-            "zona_nombres_apellidos": ZONA_NOMBRES_NUEVA         # Bloque APELLIDOS/NOMBRES
+            "zona_numero": ZONA_NUMERO_NUEVA_PEATONAL,           # Número NUI
+            "zona_nombres_apellidos": ZONA_NOMBRES_NUEVA_PEATONAL # Bloque APELLIDOS/NOMBRES
         },
         "antigua": {
-            "zona_numero": ZONA_NUMERO_ANTIGUA,                  # Número No. 000000000-0
-            "zona_nombres_apellidos": ZONA_NOMBRES_ANTIGUA       # Bloque APELLIDOS Y NOMBRES
+            "zona_numero": ZONA_NUMERO_ANTIGUA_PEATONAL,         # Número No. 000000000-0
+            "zona_nombres_apellidos": ZONA_NOMBRES_ANTIGUA_PEATONAL # Bloque APELLIDOS Y NOMBRES
         }
     },
     "vehicular": {
         "nueva": {
-            "zona_numero": ZONA_NUMERO_NUEVA,
-            "zona_nombres_apellidos": ZONA_NOMBRES_NUEVA
+            "zona_numero": ZONA_NUMERO_NUEVA_VEHICULAR,
+            "zona_nombres_apellidos": ZONA_NOMBRES_NUEVA_VEHICULAR
         },
         "antigua": {
-            "zona_numero": ZONA_NUMERO_ANTIGUA,
-            "zona_nombres_apellidos": ZONA_NOMBRES_ANTIGUA
+            "zona_numero": ZONA_NUMERO_ANTIGUA_VEHICULAR,
+            "zona_nombres_apellidos": ZONA_NOMBRES_ANTIGUA_VEHICULAR
         }
     }
 }

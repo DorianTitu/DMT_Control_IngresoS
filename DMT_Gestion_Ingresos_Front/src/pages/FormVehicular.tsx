@@ -175,7 +175,7 @@ export const FormVehicular: React.FC<FormVehicularProps> = ({ onClose, onSubmit 
 
   return (
     <div className="modal-overlay">
-      <div className="modal">
+      <div className="modal entry-modal compact-entry-modal">
         <div className="modal-header brown">
           <div className="modal-header-left">
             <p className="modal-eyebrow">Módulo Vehicular</p>

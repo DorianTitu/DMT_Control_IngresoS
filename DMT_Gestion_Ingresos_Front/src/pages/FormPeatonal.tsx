@@ -164,7 +164,7 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
 
   return (
     <div className="modal-overlay">
-      <div className="modal">
+      <div className="modal entry-modal compact-entry-modal">
         <div className="modal-header red">
           <div className="modal-header-left">
             <p className="modal-eyebrow">Módulo Peatonal</p>
