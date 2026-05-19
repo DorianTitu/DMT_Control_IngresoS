@@ -5,7 +5,7 @@
       "nombre": "Parroquia",
       "activo": true,
       "cupo_vehicular": null,
-      "parqueo_reset_at": "2026-05-12T22:09:20"
+      "parqueo_reset_at": "2026-05-18T12:41:36"
     },
     {
       "id": "dpto-1b",
@@ -57,6 +57,20 @@
       "tipo": "vehicular",
       "activo": true,
       "departamento_id": "dpto-1a"
+    },
+    {
+      "id": "motivo-chocolatada-c455fb",
+      "nombre": "Chocolatada",
+      "tipo": "ambos",
+      "departamento_id": "dpto-1a",
+      "activo": true
+    },
+    {
+      "id": "motivo-boda-85f5dc",
+      "nombre": "Boda",
+      "tipo": "ambos",
+      "departamento_id": "dpto-1a",
+      "activo": true
     }
   ]
 }

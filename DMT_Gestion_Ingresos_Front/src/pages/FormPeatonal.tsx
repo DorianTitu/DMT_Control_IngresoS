@@ -95,6 +95,14 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
     setLoading(true)
     setError(null)
     setInfo(null)
+    setImagenes(null)
+    setZonasOcr(null)
+    setFormData(prev => ({
+      ...prev,
+      nombres: '',
+      apellidos: '',
+      cedula: '',
+    }))
     try {
       const captura = await apiService.capturarRegistro('peatonal')
       setImagenes(captura.imagenes)
@@ -178,7 +186,12 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
         <div className="modal-body">
           <div className="photo-col">
             <div className="photo-box tall">
-              {imagenes?.cedula ? (
+              {loading ? (
+                <div className="photo-loading">
+                  <span className="saving-spinner" />
+                  <p>Capturando cédula...</p>
+                </div>
+              ) : imagenes?.cedula ? (
                 <>
                   <img
                     src={
@@ -198,8 +211,13 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
             </div>
 
             <div className="photo-box tall">
-              {imagenes?.usuario ? (
-                <img src={`data:image/jpeg;base64,${imagenes.usuario}`} alt="Rostro" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {loading ? (
+                <div className="photo-loading">
+                  <span className="saving-spinner" />
+                  <p>Capturando rostro...</p>
+                </div>
+              ) : imagenes?.usuario ? (
+                <img src={`data:image/jpeg;base64,${imagenes.usuario}`} alt="Rostro" className="photo-img" />
               ) : (
                 <div className="photo-add">+</div>
               )}

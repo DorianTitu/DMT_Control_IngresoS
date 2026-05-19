@@ -150,13 +150,6 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
     })
   }
 
-  const handleMoverMotivo = async (item: MotivoCatalogo, departamentoId: string) => {
-    await withActionFeedback('Moviendo motivo...', async () => {
-      await apiService.updateMotivo(item.id, { departamento_id: departamentoId })
-      await fetchCatalogos()
-    })
-  }
-
   const handleToggleMotivo = async (item: MotivoCatalogo) => {
     await withActionFeedback(item.activo ? 'Desactivando motivo...' : 'Reactivando motivo...', async () => {
       await apiService.updateMotivo(item.id, { activo: !item.activo })
@@ -336,14 +329,6 @@ export const CatalogosConfig: React.FC<CatalogosConfigProps> = ({ onClose }) => 
                           <option value="ambos">Ambos</option>
                           <option value="peatonal">Peatonal</option>
                           <option value="vehicular">Vehicular</option>
-                        </select>
-                        <select
-                          className="form-select"
-                          value={selectedDeptId}
-                          onChange={(event) => handleMoverMotivo(item, event.target.value)}
-                          title="Mover a otro departamento"
-                        >
-                          {departamentos.map((dept) => <option key={dept.id} value={dept.id}>{dept.nombre}</option>)}
                         </select>
                         <div className="catalog-actions">
                           <button type="button" className="btn-small" onClick={() => handleGuardarMotivo(item)} disabled={!!actionMessage}>Guardar</button>
