@@ -29,9 +29,9 @@ services:
       REGISTROS_BASE_PATH: /app/data/registros
       OCR_RESULTADOS_DIR: /app/data/ocr_resultados
       CATALOGOS_PATH: /app/data/catalogos.json
-      CORS_ORIGINS: http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000
+      CORS_ORIGINS: http://localhost:5174,http://localhost:5173,http://localhost:3000,http://127.0.0.1:5174,http://127.0.0.1:5173,http://127.0.0.1:3000
     ports:
-      - "8000:8000"
+      - "8001:8000"
     volumes:
       - ${DMT_DATA_PATH:-./DMT_Datos}:/app/data
     depends_on:
@@ -42,11 +42,11 @@ services:
     build:
       context: ./DMT_Gestion_Ingresos_Front
       args:
-        VITE_API_URL: http://localhost:8000
+        VITE_API_URL: http://localhost:8001
     container_name: dmt_ingresos_front
     restart: unless-stopped
     ports:
-      - "5173:80"
+      - "5174:80"
     depends_on:
       - backend
 
