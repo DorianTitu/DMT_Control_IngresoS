@@ -22,10 +22,12 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
   const [departamentos, setDepartamentos] = useState<CatalogoItem[]>([])
   const [motivos, setMotivos] = useState<MotivoCatalogo[]>([])
   const [zonasOcr, setZonasOcr] = useState<OcrDebugZonasResponse | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [capturing, setCapturing] = useState(false)
+  const [processing, setProcessing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [info, setInfo] = useState<string | null>(null)
+  const busy = capturing || processing
 
   useEffect(() => {
     const fetchCatalogos = async () => {
@@ -92,7 +94,8 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
   }
 
   const handleCapturar = async () => {
-    setLoading(true)
+    setCapturing(true)
+    setProcessing(false)
     setError(null)
     setInfo(null)
     setImagenes(null)
@@ -106,6 +109,8 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
     try {
       const captura = await apiService.capturarRegistro('peatonal')
       setImagenes(captura.imagenes)
+      setCapturing(false)
+      setProcessing(true)
 
       const ia = await apiService.procesarCedulaConIA(captura.imagenes.cedula, formData.tipoCedula, 'peatonal')
       const datos = ia.resultado_ia
@@ -134,7 +139,8 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'No se pudo capturar/procesar la cédula')
     } finally {
-      setLoading(false)
+      setCapturing(false)
+      setProcessing(false)
     }
   }
 
@@ -186,12 +192,7 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
         <div className="modal-body">
           <div className="photo-col">
             <div className="photo-box tall">
-              {loading ? (
-                <div className="photo-loading">
-                  <span className="saving-spinner" />
-                  <p>Capturando cédula...</p>
-                </div>
-              ) : imagenes?.cedula ? (
+              {imagenes?.cedula ? (
                 <>
                   <img
                     src={
@@ -202,8 +203,13 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
                     alt="Cédula con zonas OCR"
                     className="photo-img"
                   />
-                  <span className="ocr-zone-badge">Zonas OCR</span>
+                  {zonasOcr?.imagen_marcada_base64 && <span className="ocr-zone-badge">Zonas OCR</span>}
                 </>
+              ) : capturing ? (
+                <div className="photo-loading">
+                  <span className="saving-spinner" />
+                  <p>Capturando cédula...</p>
+                </div>
               ) : (
                 <div className="photo-add">+</div>
               )}
@@ -211,13 +217,13 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
             </div>
 
             <div className="photo-box tall">
-              {loading ? (
+              {imagenes?.usuario ? (
+                <img src={`data:image/jpeg;base64,${imagenes.usuario}`} alt="Rostro" className="photo-img" />
+              ) : capturing ? (
                 <div className="photo-loading">
                   <span className="saving-spinner" />
                   <p>Capturando rostro...</p>
                 </div>
-              ) : imagenes?.usuario ? (
-                <img src={`data:image/jpeg;base64,${imagenes.usuario}`} alt="Rostro" className="photo-img" />
               ) : (
                 <div className="photo-add">+</div>
               )}
@@ -346,12 +352,12 @@ export const FormPeatonal: React.FC<FormPeatonalProps> = ({ onClose, onSubmit })
         {info && <div className="form-info">{info}</div>}
 
         <div className="modal-footer">
-          <button className="btn-capture" onClick={handleCapturar} disabled={loading}>
-            {loading ? 'Procesando...' : 'Capturar nuevo registro'}
+          <button className="btn-capture" onClick={handleCapturar} disabled={busy}>
+            {capturing ? 'Capturando...' : processing ? 'Procesando datos...' : 'Capturar nuevo registro'}
           </button>
           <div className="footer-right">
             <button onClick={onClose} className="btn-cancel">Cancelar</button>
-            <button onClick={handleSubmit} className="btn-save" disabled={loading || saving}>Guardar Registro</button>
+            <button onClick={handleSubmit} className="btn-save" disabled={busy || saving}>Guardar Registro</button>
           </div>
         </div>
       </div>
