@@ -33,7 +33,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./DMT_Gestion_Ingresos_Back/data:/app/data
+      - ${DMT_DATA_PATH:-./DMT_Datos}:/app/data
     depends_on:
       db:
         condition: service_healthy
