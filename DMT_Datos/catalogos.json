@@ -1,0 +1,1021 @@
+{
+  "departamentos": [
+    {
+      "id": "administracion",
+      "nombre": "Administración",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "bar",
+      "nombre": "BAR",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "bloque-bachillerato",
+      "nombre": "BLOQUE BACHILLERATO",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "colecturia",
+      "nombre": "COLECTURIA",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "construccion",
+      "nombre": "CONSTRUCCION",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "deportes",
+      "nombre": "DEPORTES",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "docentes",
+      "nombre": "DOCENTES",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "escuela",
+      "nombre": "ESCUELA",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "imprenta",
+      "nombre": "IMPRENTA",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "inspeccion",
+      "nombre": "INSPECCION",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "mantenimientos",
+      "nombre": "MANTENIMIENTOS",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "mecanoplast",
+      "nombre": "Mecanoplast",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "medico",
+      "nombre": "MEDICO",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "parroquia",
+      "nombre": "PARROQUIA",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "reuniones-padres-familia",
+      "nombre": "REUNIONES PADRES DE FAMILIA",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "secretaria",
+      "nombre": "SECRETARIA",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    },
+    {
+      "id": "transporte",
+      "nombre": "Transporte",
+      "activo": true,
+      "cupo_vehicular": null,
+      "parqueo_reset_at": null
+    }
+  ],
+  "motivos": [
+    {
+      "id": "motivo-adquisiciones",
+      "nombre": "ADQUISICIONES",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-adma",
+      "nombre": "ADMA",
+      "tipo": "ambos",
+      "departamento_id": "parroquia",
+      "activo": true
+    },
+    {
+      "id": "motivo-admisiones",
+      "nombre": "ADMISIONES",
+      "tipo": "ambos",
+      "departamento_id": "colecturia",
+      "activo": true
+    },
+    {
+      "id": "motivo-administrativo",
+      "nombre": "ADMINISTRATIVO",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-agendamiento-citas",
+      "nombre": "AGENDAMIENTO DE CITAS",
+      "tipo": "ambos",
+      "departamento_id": "secretaria",
+      "activo": true
+    },
+    {
+      "id": "motivo-agua",
+      "nombre": "AGUA",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-aa",
+      "nombre": "AA",
+      "tipo": "ambos",
+      "departamento_id": "parroquia",
+      "activo": true
+    },
+    {
+      "id": "motivo-albitros",
+      "nombre": "ALBITROS",
+      "tipo": "ambos",
+      "departamento_id": "deportes",
+      "activo": true
+    },
+    {
+      "id": "motivo-atencion",
+      "nombre": "ATENCION",
+      "tipo": "ambos",
+      "departamento_id": "parroquia",
+      "activo": true
+    },
+    {
+      "id": "motivo-atencion-padres",
+      "nombre": "ATENCIÓN A PADRES",
+      "tipo": "ambos",
+      "departamento_id": "docentes",
+      "activo": true
+    },
+    {
+      "id": "motivo-bachillerato",
+      "nombre": "BACHILLERATO",
+      "tipo": "ambos",
+      "departamento_id": "inspeccion",
+      "activo": true
+    },
+    {
+      "id": "motivo-bar-imprenta",
+      "nombre": "BAR IMPRENTA",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-basica",
+      "nombre": "BASICA",
+      "tipo": "ambos",
+      "departamento_id": "inspeccion",
+      "activo": true
+    },
+    {
+      "id": "motivo-bluur",
+      "nombre": "BLUUR",
+      "tipo": "ambos",
+      "departamento_id": "construccion",
+      "activo": true
+    },
+    {
+      "id": "motivo-capacitacion",
+      "nombre": "Capacitación",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-cheque",
+      "nombre": "CHEQUE",
+      "tipo": "ambos",
+      "departamento_id": "colecturia",
+      "activo": true
+    },
+    {
+      "id": "motivo-cita",
+      "nombre": "CITA",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-citas",
+      "nombre": "CITAS",
+      "tipo": "ambos",
+      "departamento_id": "medico",
+      "activo": true
+    },
+    {
+      "id": "motivo-coheco",
+      "nombre": "COHECO",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-colegio-proveedores",
+      "nombre": "PROVEDORES COLEGIO",
+      "tipo": "ambos",
+      "departamento_id": "bar",
+      "activo": true
+    },
+    {
+      "id": "motivo-coliseo",
+      "nombre": "COLISEO",
+      "tipo": "ambos",
+      "departamento_id": "reuniones-padres-familia",
+      "activo": true
+    },
+    {
+      "id": "motivo-compras",
+      "nombre": "compras",
+      "tipo": "ambos",
+      "departamento_id": "mecanoplast",
+      "activo": true
+    },
+    {
+      "id": "motivo-comunidad",
+      "nombre": "COMUNIDAD",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-comunicacion",
+      "nombre": "COMUNICACION",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-construcciones-general",
+      "nombre": "CONSTRUCCIONES GENERAL",
+      "tipo": "ambos",
+      "departamento_id": "construccion",
+      "activo": true
+    },
+    {
+      "id": "motivo-coordinacion-academica",
+      "nombre": "COORDINACION ACADEMICA",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-copiadora",
+      "nombre": "COPIADORA",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-curso",
+      "nombre": "CURSO",
+      "tipo": "ambos",
+      "departamento_id": "parroquia",
+      "activo": true
+    },
+    {
+      "id": "motivo-dece",
+      "nombre": "DECE",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-dece-admiciones",
+      "nombre": "DECE ADMICIONES",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-dece-transporte",
+      "nombre": "DECE",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-despachos",
+      "nombre": "DESPACHOS",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-dmt",
+      "nombre": "DMT",
+      "tipo": "ambos",
+      "departamento_id": "construccion",
+      "activo": true
+    },
+    {
+      "id": "motivo-docentes",
+      "nombre": "DOCENTES",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-documentacion",
+      "nombre": "DOCUMENTACION",
+      "tipo": "ambos",
+      "departamento_id": "secretaria",
+      "activo": true
+    },
+    {
+      "id": "motivo-documentos",
+      "nombre": "DOCUMENTOS",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-documentos-medico",
+      "nombre": "DOCUMENTOS",
+      "tipo": "ambos",
+      "departamento_id": "medico",
+      "activo": true
+    },
+    {
+      "id": "motivo-entregas",
+      "nombre": "ENTREGAS",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-entregas-mantenimiento",
+      "nombre": "ENTREGAS",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-escuela",
+      "nombre": "ESCUELA",
+      "tipo": "ambos",
+      "departamento_id": "inspeccion",
+      "activo": true
+    },
+    {
+      "id": "motivo-estructuras",
+      "nombre": "ESTRUCTURAS",
+      "tipo": "ambos",
+      "departamento_id": "construccion",
+      "activo": true
+    },
+    {
+      "id": "motivo-gas",
+      "nombre": "GAS",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-general",
+      "nombre": "GENERAL",
+      "tipo": "ambos",
+      "departamento_id": "inspeccion",
+      "activo": true
+    },
+    {
+      "id": "motivo-gth",
+      "nombre": "GTH",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-ingles",
+      "nombre": "INGLÉS",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-instalacion",
+      "nombre": "Instalación",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-juan-23",
+      "nombre": "JUAN 23",
+      "tipo": "ambos",
+      "departamento_id": "parroquia",
+      "activo": true
+    },
+    {
+      "id": "motivo-jugadores",
+      "nombre": "JUGADORES",
+      "tipo": "ambos",
+      "departamento_id": "deportes",
+      "activo": true
+    },
+    {
+      "id": "motivo-laboratorio",
+      "nombre": "LABORATORIO",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-mantenimiento",
+      "nombre": "Mantenimiento",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-mantenimiento-imprenta",
+      "nombre": "MANTENIMIENTO",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-mantenimiento-mecanoplast",
+      "nombre": "MANTENIMIENTO",
+      "tipo": "ambos",
+      "departamento_id": "mecanoplast",
+      "activo": true
+    },
+    {
+      "id": "motivo-mesa-compartida",
+      "nombre": "MESA COMPARTIDA",
+      "tipo": "ambos",
+      "departamento_id": "reuniones-padres-familia",
+      "activo": true
+    },
+    {
+      "id": "motivo-misa",
+      "nombre": "MISA",
+      "tipo": "ambos",
+      "departamento_id": "parroquia",
+      "activo": true
+    },
+    {
+      "id": "motivo-musica",
+      "nombre": "MUSICA",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-padres",
+      "nombre": "PADRES",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-pagos",
+      "nombre": "PAGOS",
+      "tipo": "ambos",
+      "departamento_id": "bar",
+      "activo": true
+    },
+    {
+      "id": "motivo-pastoral",
+      "nombre": "PASTORAL",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-pastoral-transporte",
+      "nombre": "PASTORAL",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-pension",
+      "nombre": "PENSION",
+      "tipo": "ambos",
+      "departamento_id": "colecturia",
+      "activo": true
+    },
+    {
+      "id": "motivo-proveedores",
+      "nombre": "PROVEEDORES",
+      "tipo": "ambos",
+      "departamento_id": "mecanoplast",
+      "activo": true
+    },
+    {
+      "id": "motivo-proveedores-escuela",
+      "nombre": "PROVEDORES ESCUELA",
+      "tipo": "ambos",
+      "departamento_id": "bar",
+      "activo": true
+    },
+    {
+      "id": "motivo-recaudaciones-informacion",
+      "nombre": "RECAUDACIONES INFORMACION",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-recolector-b",
+      "nombre": "RECOLECTOR B",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-rectorado",
+      "nombre": "RECTORADO",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-regalo",
+      "nombre": "REGALO",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-retiro",
+      "nombre": "RETIRO",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-retiro-estudiante",
+      "nombre": "RETIRO DE ESTUDIANTE",
+      "tipo": "ambos",
+      "departamento_id": "medico",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion",
+      "nombre": "REUNION",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion-administracion",
+      "nombre": "REUNION ADMINISTRACION",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion-deportes",
+      "nombre": "REUNION",
+      "tipo": "ambos",
+      "departamento_id": "deportes",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion-padre-fernanado",
+      "nombre": "REUNION PADRE FERNANDO",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion-padre-vla",
+      "nombre": "REUNION PADRE VLA",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-reuniones",
+      "nombre": "REUNIONES",
+      "tipo": "ambos",
+      "departamento_id": "mecanoplast",
+      "activo": true
+    },
+    {
+      "id": "motivo-salon-aux",
+      "nombre": "SALON AUX",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-salon-san",
+      "nombre": "SALON SAN",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-secretaria-interna",
+      "nombre": "SECRETARIA INTERNA",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-sistemas",
+      "nombre": "SISTEMAS",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-solicitudes",
+      "nombre": "SOLICITUDES",
+      "tipo": "ambos",
+      "departamento_id": "secretaria",
+      "activo": true
+    },
+    {
+      "id": "motivo-sonido",
+      "nombre": "SONIDO",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-soporte-tecnico",
+      "nombre": "Soporte técnico",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-teatro",
+      "nombre": "TEATRO",
+      "tipo": "ambos",
+      "departamento_id": "reuniones-padres-familia",
+      "activo": true
+    },
+    {
+      "id": "motivo-temporal",
+      "nombre": "TEMPORAL",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-talleres",
+      "nombre": "TALLERES",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-trabajos",
+      "nombre": "TRABAJOS",
+      "tipo": "ambos",
+      "departamento_id": "escuela",
+      "activo": true
+    },
+    {
+      "id": "motivo-vicerrectorado",
+      "nombre": "VICERRECTORADO",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-visitas",
+      "nombre": "VISITAS",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-visitas-mantenimiento",
+      "nombre": "VISITAS",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-mantenimiento",
+      "nombre": "Mantenimiento",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-mantenimiento-imprenta",
+      "nombre": "MANTENIMIENTO",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-mantenimiento-mecanoplast",
+      "nombre": "MANTENIMIENTO",
+      "tipo": "ambos",
+      "departamento_id": "mecanoplast",
+      "activo": true
+    },
+    {
+      "id": "motivo-mesa-compartida",
+      "nombre": "MESA COMPARTIDA",
+      "tipo": "ambos",
+      "departamento_id": "reuniones-padres-familia",
+      "activo": true
+    },
+    {
+      "id": "motivo-misa",
+      "nombre": "MISA",
+      "tipo": "ambos",
+      "departamento_id": "parroquia",
+      "activo": true
+    },
+    {
+      "id": "motivo-musica",
+      "nombre": "MUSICA",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-padres",
+      "nombre": "PADRES",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-pagos",
+      "nombre": "PAGOS",
+      "tipo": "ambos",
+      "departamento_id": "bar",
+      "activo": true
+    },
+    {
+      "id": "motivo-pastoral",
+      "nombre": "PASTORAL",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-pastoral-transporte",
+      "nombre": "PASTORAL",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-pension",
+      "nombre": "PENSION",
+      "tipo": "ambos",
+      "departamento_id": "colecturia",
+      "activo": true
+    },
+    {
+      "id": "motivo-proveedores",
+      "nombre": "PROVEEDORES",
+      "tipo": "ambos",
+      "departamento_id": "mecanoplast",
+      "activo": true
+    },
+    {
+      "id": "motivo-proveedores-escuela",
+      "nombre": "PROVEDORES ESCUELA",
+      "tipo": "ambos",
+      "departamento_id": "bar",
+      "activo": true
+    },
+    {
+      "id": "motivo-recaudaciones-informacion",
+      "nombre": "RECAUDACIONES INFORMACION",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-recolector-b",
+      "nombre": "RECOLECTOR B",
+      "tipo": "ambos",
+      "departamento_id": "transporte",
+      "activo": true
+    },
+    {
+      "id": "motivo-rectorado",
+      "nombre": "RECTORADO",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-regalo",
+      "nombre": "REGALO",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-retiro",
+      "nombre": "RETIRO",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-retiro-estudiante",
+      "nombre": "RETIRO DE ESTUDIANTE",
+      "tipo": "ambos",
+      "departamento_id": "medico",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion",
+      "nombre": "REUNION",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion-administracion",
+      "nombre": "REUNION ADMINISTRACION",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion-deportes",
+      "nombre": "REUNION",
+      "tipo": "ambos",
+      "departamento_id": "deportes",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion-padre-fernanado",
+      "nombre": "REUNION PADRE FERNANDO",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-reunion-padre-vla",
+      "nombre": "REUNION PADRE VLA",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-reuniones",
+      "nombre": "REUNIONES",
+      "tipo": "ambos",
+      "departamento_id": "mecanoplast",
+      "activo": true
+    },
+    {
+      "id": "motivo-salon-aux",
+      "nombre": "SALON AUX",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-salon-san",
+      "nombre": "SALON SAN",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-secretaria-interna",
+      "nombre": "SECRETARIA INTERNA",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-sistemas",
+      "nombre": "SISTEMAS",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-solicitudes",
+      "nombre": "SOLICITUDES",
+      "tipo": "ambos",
+      "departamento_id": "secretaria",
+      "activo": true
+    },
+    {
+      "id": "motivo-sonido",
+      "nombre": "SONIDO",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-soporte-tecnico",
+      "nombre": "Soporte técnico",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-teatro",
+      "nombre": "TEATRO",
+      "tipo": "ambos",
+      "departamento_id": "reuniones-padres-familia",
+      "activo": true
+    },
+    {
+      "id": "motivo-temporal",
+      "nombre": "TEMPORAL",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-talleres",
+      "nombre": "TALLERES",
+      "tipo": "ambos",
+      "departamento_id": "bloque-bachillerato",
+      "activo": true
+    },
+    {
+      "id": "motivo-trabajos",
+      "nombre": "TRABAJOS",
+      "tipo": "ambos",
+      "departamento_id": "escuela",
+      "activo": true
+    },
+    {
+      "id": "motivo-vicerrectorado",
+      "nombre": "VICERRECTORADO",
+      "tipo": "ambos",
+      "departamento_id": "administracion",
+      "activo": true
+    },
+    {
+      "id": "motivo-visitas",
+      "nombre": "VISITAS",
+      "tipo": "ambos",
+      "departamento_id": "imprenta",
+      "activo": true
+    },
+    {
+      "id": "motivo-visitas-mantenimiento",
+      "nombre": "VISITAS",
+      "tipo": "ambos",
+      "departamento_id": "mantenimientos",
+      "activo": true
+    },
+    {
+      "id": "motivo-ingreso-de-alimentos-7f49e8",
+      "nombre": "INGRESO DE ALIMENTOS",
+      "tipo": "ambos",
+      "departamento_id": "bar",
+      "activo": true
+    }
+  ]
+}
